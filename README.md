@@ -1,120 +1,119 @@
-# TurtleBot3_LiDAR
-# 🤖 TurtleBot3 ROS2 Humble Learning Journey
+# 🤖 TurtleBot3 LiDAR Learning Repository
 
-Dokumentasi langkah-langkah instalasi, simulasi, teleoperation, dan obstacle avoidance menggunakan TurtleBot3 pada ROS2 Humble.
+A step-by-step ROS2 Humble learning repository for beginners who want to learn TurtleBot3 simulation, LiDAR processing, obstacle avoidance, SLAM, and autonomous navigation from scratch.
 
 ---
 
-# 1. Environment
+## 📖 About This Repository
 
-## Sistem
+This repository documents my learning journey with TurtleBot3 using ROS2 Humble and Gazebo.
+
+Topics covered:
+
+- TurtleBot3 Simulation
+- ROS2 Fundamentals
+- Topic & Node Communication
+- LiDAR Data Processing
+- Obstacle Avoidance
+- RViz Visualization
+- SLAM (Coming Soon)
+- Navigation2 (Coming Soon)
+- Autonomous Robotics (Coming Soon)
+
+The goal is to provide a beginner-friendly roadmap from manual robot control to fully autonomous navigation.
+
+---
+
+## 🛠 Prerequisites
+
+Before using this repository, make sure you have:
 
 - Ubuntu 22.04
 - ROS2 Humble
 - Gazebo
-- TurtleBot3 Burger
+- Python 3
+
+Verify your ROS installation:
+
+```bash
+echo $ROS_DISTRO
+```
+
+Expected output:
+
+```text
+humble
+```
 
 ---
 
-# 2. Membuat Workspace
+## 🚀 Getting Started
 
-Buat workspace:
+### 1. Clone This Repository
 
 ```bash
-mkdir -p ~/turtlebot3_ws/src
-
-cd ~/turtlebot3_ws/src
+git clone https://github.com/YOUR_USERNAME/TurtleBot3_LiDAR.git
 ```
 
-Clone package simulasi TurtleBot3:
+Enter the workspace:
 
 ```bash
+cd TurtleBot3_LiDAR
+```
+
+---
+
+### 2. Clone TurtleBot3 Simulation Package
+
+This repository does not include official TurtleBot3 simulation packages.
+
+Clone them manually:
+
+```bash
+cd src
+
 git clone -b humble https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
-```
 
-Kembali ke workspace:
-
-```bash
-cd ~/turtlebot3_ws
+cd ..
 ```
 
 ---
 
-# 3. Install Dependency
-
-Update package:
+### 3. Install Dependencies
 
 ```bash
 sudo apt update
-```
 
-Install package TurtleBot3:
-
-```bash
 sudo apt install ros-humble-turtlebot3
+
 sudo apt install ros-humble-turtlebot3-msgs
-```
 
-Install dependency workspace:
-
-```bash
-rosdep install --from-paths src --ignore-src -r -y
-```
-
-Jika muncul error 404:
-
-```bash
-sudo apt clean
-sudo rm -rf /var/lib/apt/lists/*
-sudo apt update
-sudo apt upgrade -y
-```
-
-Kemudian ulangi:
-
-```bash
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
 ---
 
-# 4. Build Workspace
+### 4. Build Workspace
 
 ```bash
-cd ~/turtlebot3_ws
-
 colcon build --symlink-install
 ```
 
-Source workspace:
+Source the workspace:
 
 ```bash
 source install/setup.bash
 ```
 
-Agar otomatis saat membuka terminal:
-
-```bash
-echo "source ~/turtlebot3_ws/install/setup.bash" >> ~/.bashrc
-```
-
-Reload:
-
-```bash
-source ~/.bashrc
-```
-
 ---
 
-# 5. Set Model TurtleBot3
-
-Gunakan model Burger:
+### 5. Select TurtleBot3 Model
 
 ```bash
 export TURTLEBOT3_MODEL=burger
 ```
 
-Simpan permanen:
+Optional (make it permanent):
 
 ```bash
 echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
@@ -122,77 +121,38 @@ echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-Verifikasi:
-
-```bash
-echo $TURTLEBOT3_MODEL
-```
-
-Output:
-
-```text
-burger
-```
-
 ---
 
-# 6. Menjalankan Simulasi Gazebo
-
-Buka terminal:
+### 6. Launch Gazebo Simulation
 
 ```bash
-source /opt/ros/humble/setup.bash
-
-source ~/turtlebot3_ws/install/setup.bash
-
 ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ```
 
-World lain:
+You should see:
 
-```bash
-ros2 launch turtlebot3_gazebo empty_world.launch.py
-
-ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
-```
-
----
-
-# 7. Mengecek Topic ROS2
-
-Buka terminal baru:
-
-```bash
-ros2 topic list
-```
-
-Topic penting:
-
-```text
-/cmd_vel
-/odom
-/scan
-/tf
-/tf_static
-```
+- Gazebo Simulator
+- TurtleBot3 Burger
+- LiDAR Sensor
+- Simulated Environment
 
 ---
 
-# 8. Teleoperation Keyboard
+### 7. Teleoperate the Robot
 
-Install package:
+Install keyboard teleoperation:
 
 ```bash
 sudo apt install ros-humble-teleop-twist-keyboard
 ```
 
-Jalankan:
+Run:
 
 ```bash
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 
-Kontrol:
+Controls:
 
 ```text
 u    i    o
@@ -200,43 +160,31 @@ j    k    l
 m    ,    .
 ```
 
-| Tombol | Aksi |
-|---------|---------|
-| i | Maju |
-| , | Mundur |
-| j | Belok kiri |
-| l | Belok kanan |
+| Key | Action |
+|------|---------|
+| i | Move Forward |
+| , | Move Backward |
+| j | Turn Left |
+| l | Turn Right |
 | k | Stop |
 
 ---
 
-# 9. Mengecek Data LiDAR
+### 8. Visualize LiDAR Data
 
-Lihat data mentah:
+Check available scan data:
 
 ```bash
 ros2 topic echo /scan
 ```
 
-Data berasal dari:
-
-```text
-sensor_msgs/msg/LaserScan
-```
-
-Nilai `ranges` menunjukkan jarak obstacle dalam meter.
-
----
-
-# 10. Visualisasi LiDAR di RViz
-
-Jalankan:
+Open RViz:
 
 ```bash
 rviz2
 ```
 
-Tambahkan:
+Add:
 
 ```text
 LaserScan
@@ -248,261 +196,117 @@ Topic:
 /scan
 ```
 
-LiDAR akan terlihat secara realtime.
-
 ---
 
-# 11. Membuat Package Obstacle Avoidance
+### 9. Run Obstacle Avoidance
 
-Masuk ke folder source:
+Build the package:
 
 ```bash
-cd ~/turtlebot3_ws/src
-```
-
-Buat package baru:
-
-```bash
-ros2 pkg create \
---build-type ament_python \
-tb3_obstacle_avoid
-```
-
-Struktur:
-
-```text
-tb3_obstacle_avoid/
-├── package.xml
-├── setup.py
-└── tb3_obstacle_avoid/
-    └── avoid.py
-```
-
----
-
-# 12. Source Code Obstacle Avoidance
-
-File:
-
-```text
-tb3_obstacle_avoid/tb3_obstacle_avoid/avoid.py
-```
-
-```python
-import rclpy
-
-from rclpy.node import Node
-
-from sensor_msgs.msg import LaserScan
-from geometry_msgs.msg import Twist
-
-
-class ObstacleAvoid(Node):
-
-    def __init__(self):
-
-        super().__init__('obstacle_avoid')
-
-        self.sub = self.create_subscription(
-            LaserScan,
-            '/scan',
-            self.scan_callback,
-            10
-        )
-
-        self.pub = self.create_publisher(
-            Twist,
-            '/cmd_vel',
-            10
-        )
-
-    def scan_callback(self, msg):
-
-        cmd = Twist()
-
-        front = min(
-            list(msg.ranges[:20]) +
-            list(msg.ranges[-20:])
-        )
-
-        if front < 0.5:
-
-            cmd.linear.x = 0.0
-            cmd.angular.z = 0.5
-
-        else:
-
-            cmd.linear.x = 0.15
-            cmd.angular.z = 0.0
-
-        self.pub.publish(cmd)
-
-
-def main():
-
-    rclpy.init()
-
-    node = ObstacleAvoid()
-
-    rclpy.spin(node)
-
-    node.destroy_node()
-
-    rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
-```
-
----
-
-# 13. Konfigurasi setup.py
-
-Tambahkan:
-
-```python
-entry_points={
-    'console_scripts': [
-        'avoid = tb3_obstacle_avoid.avoid:main',
-    ],
-},
-```
-
----
-
-# 14. Build Package
-
-```bash
-cd ~/turtlebot3_ws
-
 colcon build --symlink-install
-```
 
-Source ulang:
-
-```bash
 source install/setup.bash
 ```
 
----
-
-# 15. Menjalankan Obstacle Avoidance
-
-Terminal 1:
+Launch TurtleBot3:
 
 ```bash
 ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ```
 
-Terminal 2:
+Open a second terminal:
 
 ```bash
-source ~/turtlebot3_ws/install/setup.bash
+source install/setup.bash
 
 ros2 run tb3_obstacle_avoid avoid
 ```
 
-Robot akan:
+The robot will:
+
+- Move forward
+- Detect obstacles using LiDAR
+- Rotate when obstacles are too close
+- Continue moving when a path is clear
+
+---
+
+## 📂 Repository Structure
 
 ```text
-Jalan maju
-↓
-Mendeteksi obstacle
-↓
-Berputar
-↓
-Menemukan jalur kosong
-↓
-Maju kembali
+TurtleBot3_LiDAR/
+│
+├── README.md
+├── .gitignore
+│
+├── src/
+│   └── tb3_obstacle_avoid/
+│
+└── docs/
+    └── TUTORIAL.md
 ```
 
 ---
 
-# 16. Arsitektur Sistem
+## 📚 Learning Roadmap
+
+Current Progress:
 
 ```text
-        LiDAR
-       (/scan)
-           │
-           ▼
-   Obstacle Avoid Node
-           │
-           ▼
-       /cmd_vel
-           │
-           ▼
-      TurtleBot3
-```
+ROS2 Basics
+    ✓
 
----
+Gazebo Simulation
+    ✓
 
-# 17. Useful Commands
+Teleoperation
+    ✓
 
-## List topic
+LiDAR Processing
+    ✓
 
-```bash
-ros2 topic list
-```
-
-## Echo topic
-
-```bash
-ros2 topic echo /scan
-```
-
-## List node
-
-```bash
-ros2 node list
-```
-
-## List package
-
-```bash
-ros2 pkg list | grep turtlebot3
-```
-
-## Rebuild workspace
-
-```bash
-cd ~/turtlebot3_ws
-
-colcon build --symlink-install
-```
-
-## Source workspace
-
-```bash
-source ~/turtlebot3_ws/install/setup.bash
-```
-
----
-
-# 🚀 Next Step
-
-Setelah tahap ini selesai, materi berikutnya:
-
-1. SLAM Toolbox
-2. Mapping Environment
-3. Save Map
-4. Localization
-5. Navigation2
-6. Autonomous Navigation
-7. Camera Integration
-8. YOLO Object Detection
-9. Autonomous Inspection Robot
-
-Roadmap:
-
-```text
-Teleop
-  ↓
 Obstacle Avoidance
-  ↓
-SLAM
-  ↓
+    ✓
+
+SLAM Toolbox
+    ⏳
+
 Navigation2
-  ↓
-Autonomous Robot
+    ⏳
+
+Autonomous Navigation
+    ⏳
+
+Computer Vision
+    ⏳
 ```
+
+---
+
+## 📘 Full Tutorial
+
+For detailed step-by-step explanations, commands, and source code, see:
+
+```text
+docs/TUTORIAL.md
+```
+
+---
+
+## 🎯 Future Improvements
+
+- SLAM Toolbox integration
+- Map saving and loading
+- Localization
+- Navigation2
+- Camera integration
+- YOLO object detection
+- Autonomous inspection robot
+
+---
+
+## ⭐ Contributing
+
+Feel free to fork this repository and experiment with your own TurtleBot3 projects.
+
+If this repository helps you learn ROS2 and TurtleBot3, consider giving it a star.
