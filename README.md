@@ -244,6 +244,7 @@ TurtleBot3_LiDAR/
 │
 └── docs/
     └── TUTORIAL.md
+```
 
 ## 10. Install SLAM Toolbox
 
