@@ -269,25 +269,7 @@ slam_toolbox
 
 ---
 
-## 11. Launch TurtleBot3 Simulation
-
-Open Terminal 1:
-
-```bash
-source /opt/ros/humble/setup.bash
-
-source ~/turtlebot3_ws/install/setup.bash
-
-export TURTLEBOT3_MODEL=burger
-
-ros2 launch turtlebot3_gazebo turtlebot3_house.launch.py
-```
-
-The house world is recommended because it contains multiple rooms and corridors suitable for mapping.
-
----
-
-## 12. Start SLAM Toolbox
+## 11. Start SLAM Toolbox
 
 Open Terminal 2:
 
@@ -307,7 +289,7 @@ allows SLAM Toolbox to synchronize with Gazebo simulation time.
 
 ---
 
-## 13. Verify SLAM Topics
+## 12. Verify SLAM Topics
 
 Check whether the map topic is available:
 
@@ -336,7 +318,7 @@ Expected output:
 
 ---
 
-## 14. Visualize Mapping in RViz
+## 13. Visualize Mapping in RViz
 
 Launch RViz:
 
@@ -378,7 +360,7 @@ If everything is configured correctly, RViz will display:
 
 ---
 
-## 15. Create a Map
+## 14. Create a Map
 
 Open Terminal 3:
 
@@ -404,7 +386,7 @@ The map will gradually appear in RViz.
 
 ---
 
-## 16. Save the Generated Map
+## 15. Save the Generated Map
 
 Create a map directory:
 
@@ -441,7 +423,7 @@ my_house.yaml
 
 ---
 
-## 17. Understanding Coordinate Frames
+## 16. Understanding Coordinate Frames
 
 The mapping process introduces several important coordinate frames:
 
@@ -461,7 +443,7 @@ These transforms allow the robot to estimate its position while building the map
 
 ---
 
-## 18. Mapping Architecture
+## 17. Mapping Architecture
 
 ```text
 TurtleBot3
