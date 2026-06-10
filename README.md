@@ -1,4 +1,4 @@
-# 🤖 TurtleBot3 LiDAR Learning Repository
+# 🤖 TurtleBot3 LiDAR Basic Learning Modul
 
 A step-by-step ROS2 Humble learning repository for beginners who want to learn TurtleBot3 simulation, LiDAR processing, obstacle avoidance, SLAM, and autonomous navigation from scratch.
 
